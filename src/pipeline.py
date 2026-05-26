@@ -1,28 +1,34 @@
-import logging
-from pathlib import Path
+from src.config import GAME_NAME, TAG_LINE, MATCH_COUNT
+from src.extract import get_puuid, get_match_ids, get_match
+from src.storage import save_raw_match
 
-import pandas as pd
-
-try:
-    from src import transform as transform_module
-    from src import validate
-    from src.load import load
-except ImportError:
-    import transform as transform_module
-    import validate
-    from load import load
-
-
-RAW_DATA_PATH = Path(__file__).resolve().parents[1] / "data" / "raw" / "tft_matches.json"
 
 def run_pipeline():
+    print("🚀 Starting TFT ingestion pipeline")
 
-    df = pd.read_json(RAW_DATA_PATH)
-    
-    validate.validate_data(df)
-    
-    df_fact, fact_traits, fact_units = transform_module.transform(df)
+    # 1. Get PUUID
+    puuid = get_puuid(GAME_NAME, TAG_LINE)
+    print("✅ PUUID obtained")
 
-    load(df_fact, fact_traits, fact_units)
+    # 2. Get matches
+    match_ids = get_match_ids(puuid, MATCH_COUNT)
+    print(f"📦 {len(match_ids)} matches found")
 
-    logging.info("Pipeline executed successfully.")
+    # 3. Download + save raw
+    for match_id in match_ids:
+
+        match_data = get_match(match_id)
+
+        if match_data is None:
+            print(f"❌ Failed match {match_id}")
+            continue
+
+        path = save_raw_match(match_id, match_data)
+
+        print(f"💾 Saved {match_id} → {path}")
+
+    print("🎉 Pipeline finished")
+
+
+if __name__ == "__main__":
+    run_pipeline()
