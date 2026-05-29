@@ -12,3 +12,5 @@ def save_raw_match(match_id: str, data: dict):
         json.dump(data, f, indent=2, ensure_ascii=False)
 
     return path
+
+def save_error(error):
