@@ -15,3 +15,14 @@ def save_error_as_log(match_id: str, status_code: int, reason: str):
         f.write(f"{timestamp} | match_id: {match_id} | status: {status_code} | reason : {reason}")
         
     logging.error(f"Extraction error in match {match_id} : {status_code} - {reason}")
+    
+def log_pipeline_summary(stats: dict):
+    timestamp = datetime.now().strftime("%Y_%m_%d_%H_%M")
+    path = f"data/errors/summary/{timestamp}_pipeline_summary.log"
+    
+    with open(path, "w") as f:
+        f.write(f"executed pipeline: {timestamp}\n")
+        for table, values in stats.item():
+            f.write(f"{table} : {values['entry']} entry | {values['correct']} correct | {values['rejected']} rejected \n")
+            
+        logging.info(f"pipeline summary saved in {path}")

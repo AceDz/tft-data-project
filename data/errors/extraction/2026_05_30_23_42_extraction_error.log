@@ -1,0 +1,11 @@
+2026_05_30_23_42 | match_id: PostgreSQL load | status: 0 | reason : Execution failed on sql 'SELECT DISTINCT match_id FROM fact_matches': (psycopg2.errors.UndefinedTable) no existe la relación «fact_matches»
+LINE 1: SELECT DISTINCT match_id FROM fact_matches
+                                      ^
+
+[SQL: SELECT DISTINCT match_id FROM fact_matches]
+(Background on this error at: https://sqlalche.me/e/20/f405)2026_05_30_23_42 | match_id: PostgreSQL load | status: 0 | reason : Execution failed on sql 'SELECT DISTINCT match_id FROM fact_matches': (psycopg2.errors.UndefinedTable) no existe la relación «fact_matches»
+LINE 1: SELECT DISTINCT match_id FROM fact_matches
+                                      ^
+
+[SQL: SELECT DISTINCT match_id FROM fact_matches]
+(Background on this error at: https://sqlalche.me/e/20/f405)
