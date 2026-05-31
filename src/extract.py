@@ -15,7 +15,7 @@ def extract_local_data(file_path):
 def is_rate_limit(exception):
     return isinstance(exception, requests.exceptions.HTTPError) and exception.response.status_code == 429
 
-limiter = Limiter(Rate(80, Duration.MINUTE))
+limiter = Limiter(Rate(45, Duration.MINUTE))
  
 class RiotClient:
     

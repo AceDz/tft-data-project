@@ -2,6 +2,7 @@ import logging
 import src.config as config
 import time
 from src.storage import save_raw_match
+import pandas as pd
 
 logging.basicConfig(
     level = logging.INFO,
@@ -26,7 +27,8 @@ def run_pipeline(game_name: str, tag_line: str):
         save_raw_match(match_id, data)
         participants = data["info"]["participants"]
         data_version = data["info"]["game_version"]   
-        fm,stats_fm = normalize_fact_matches(participants, match_id, data_version)
+        game_datetime = pd.to_datetime(data["info"]["game_datetime"], unit='ms')
+        fm,stats_fm = normalize_fact_matches(participants, match_id, data_version, game_datetime)
         ft,stats_ft = normalize_fact_traits(participants, match_id)
         fu, stats_fu = normalize_fact_units(participants, match_id)
         dp = normalize_dim_players(participants)

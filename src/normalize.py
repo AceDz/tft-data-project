@@ -21,6 +21,7 @@ def normalize_match(match_data):
             "gold_left": p["gold_left"],
             "last_round": p["last_round"],
             "total_damage_to_players": p["total_damage_to_players"],
+            
         }
         for p in participants
     ])
@@ -78,7 +79,7 @@ def validate_and_filter(df, df_name, critical_fields, business_rules = None, err
         
     return df_clean, stats
         
-def normalize_fact_matches(participants, match_id, data_version):
+def normalize_fact_matches(participants, match_id, data_version, game_datetime):
     df = pd.DataFrame([
         {
             "match_id" : match_id,
@@ -88,7 +89,8 @@ def normalize_fact_matches(participants, match_id, data_version):
             "level":p["level"],
             "gold_left":p["gold_left"],
             "last_round":p["last_round"],
-            "total_damage_to_players":p["total_damage_to_players"]
+            "total_damage_to_players":p["total_damage_to_players"],
+            "game_datetime": game_datetime
         }
         for p in participants
         ])
