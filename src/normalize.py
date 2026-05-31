@@ -131,4 +131,17 @@ def normalize_fact_units(participants, match_id):
         
     return validate_and_filter(df, "fact_units", ["match_id", "puuid", "unit"], error_type="fact_units_validation_error")
 
+def normalize_dim_players(participants):
+    
+    df = pd.DataFrame([
+    {
+        "puuid": p["puuid"],
+        "game_name": p["riotIdGameName"],
+        "tag_line": p["riotIdTagline"],
+    }
+    for p in participants
+    ])
+    
+    return df.drop_duplicates(subset=["puuid"])
+
 

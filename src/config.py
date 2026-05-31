@@ -5,3 +5,4 @@ HEADERS = {
 }
 
 REGION = "europe"
+COUNT = 100
